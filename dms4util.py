@@ -23,6 +23,7 @@
 # SOFTWARE.
 
 import argparse
+import functools
 import sys
 import time
 import traceback
@@ -187,9 +188,11 @@ def main():
                       choices=[300, 600, 1200, 2400, 4800,
                                9600, 14400, 28800, 115200],
                       help='The baud rate of the Dataman S4')
-    argp.add_argument('-a', '--start-address', type=int, default=0,
+    argp.add_argument('-a', '--start-address',
+                      type=functools.partial(int, base=0), default=0,
                       help='The data starting address in Dataman S4 RAM')
-    argp.add_argument('-l', '--length', type=int, default=0x800,
+    argp.add_argument('-l', '--length',
+                      type=functools.partial(int, base=0), default=0x0800,
                       help='The data length')
     argp.add_argument('-m', '--mute', action='store_true',
                       help='Configure the Dataman S4 to not beep as much')
