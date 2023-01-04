@@ -155,6 +155,7 @@ class DatamanS4:
 
     def data_to_s4(self, data):
         # RCVE (RE) pg 63
+        # TODO: Add option to fill with specified character if too short.
         assert len(data) == self.mem_size
         self._send('re')
         self._expect('^RE\r>RECEIVE BINARY  ')
