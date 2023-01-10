@@ -201,6 +201,8 @@ def main():
                       help='Have the Dataman S4 emulate a memory sent')
     argp.add_argument('-g', '--debug', action='store_true',
                       help='Output Dataman S4 traffic to stdout')
+    argp.add_argument('-v', '--verbose', action='store_true',
+                      help='Output checksum to stdout')
     argp.add_argument('binary_file', type=argparse.FileType('rb'),
                       help='The binary file to send to the Dataman S4')
     args = argp.parse_args()
@@ -215,6 +217,8 @@ def main():
         data_to = args.binary_file.read()
         s4.data_to_s4(data_to)
         chksum = sum(data_to)
+        if args.verbose:
+            print(f'0x{chksum:08X}')
         assert chksum == s4.checksum_mem()
         if args.emulate:
             s4.emulate()
